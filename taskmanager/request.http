@@ -1,0 +1,74 @@
+### Variables
+@baseUrl = http://localhost:8080/api/tasks
+@aiUrl = http://localhost:8080/api/ai
+
+### 1. Create a New Task (Full Details)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "title": "Complete Hackathon Backend",
+  "description": "Implement Task entity, repository, service, and controller endpoints",
+  "status": "IN_PROGRESS",
+  "dueDate": "2026-11-25"
+}
+
+### 2. Create Another Task (Minimal - Default status PENDING)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "title": "Setup PostgreSQL Database",
+  "description": "Migrate from H2 to PostgreSQL for production storage"
+}
+
+### 3. Retrieve All Tasks
+GET {{baseUrl}}
+Accept: application/json
+
+### 4. Retrieve Task by ID (Existing Task)
+GET {{baseUrl}}/1
+Accept: application/json
+
+### 5. Retrieve Task by ID (Non-existent Task - Tests 404 Not Found)
+GET {{baseUrl}}/999
+Accept: application/json
+
+### 6. Update Task by ID (Existing Task)
+PUT {{baseUrl}}/1
+Content-Type: application/json
+
+{
+  "title": "Complete Hackathon Backend (Finished!)",
+  "description": "CRUD operations, H2 database, and test cases implemented successfully",
+  "status": "COMPLETED",
+  "dueDate": "2026-11-20"
+}
+
+### 7. Update Task by ID (Non-existent Task - Tests 404 Not Found)
+PUT {{baseUrl}}/999
+Content-Type: application/json
+
+{
+  "title": "Ghost Task",
+  "description": "This task does not exist",
+  "status": "PENDING"
+}
+
+### 8. Delete Task by ID (Existing Task - Expects 204 No Content)
+DELETE {{baseUrl}}/2
+
+### 9. Delete Task by ID (Non-existent Task - Tests 404 Not Found)
+DELETE {{baseUrl}}/999
+
+### 10. Verify Deletion of Task 2 (Expects 404 Not Found)
+GET {{baseUrl}}/2
+Accept: application/json
+
+### 11. AI Subtask Suggestions (Google Gemini gemini-3.8-flash)
+POST {{aiUrl}}/suggest-subtasks
+Content-Type: application/json
+
+{
+  "taskDescription": "Organize a 24-hour university hackathon for 150 students"
+}
